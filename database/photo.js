@@ -1,7 +1,7 @@
 const mongoose = require('./index.js');
 
 const photoSchema = mongoose.Schema({
-  style_id: String,
+  style_id: {type: Number, index: true }, //matches style id
   url: String,
   thumbnail_url: String
 });
@@ -16,6 +16,13 @@ let save = (array) => {
   // var newRecord = new Photo(sample);
   // return newRecord.save();
   return Photo.create(array);
-}
+};
+
+let find = (sid) => {
+  return Photo.find({
+    style_id: sid
+  });
+};
 
 module.exports.save = save;
+module.exports.find = find;

@@ -34,21 +34,27 @@ app.get('/loadSkus', (req, res) => {
     });
     // Note: we use the crlfDelay option to recognize all instances of CR LF
     // ('\r\n') in input.txt as a single line break.
-    var i = 0;
+    var i = 1;
     for await (const line of rl) {
       // Each line in input.txt will be successively available here as `line`.
       var raw = `sku,style_id,size,quantity
-      ${line}`;
+${line}`;
       var object = csv.toObjects(raw)[0];
+      //if (i > 3099) //how many saved so far? lets you resume!
       await sku.save(object)
       i++;
       if(i % 1000 === 0) {
         console.log('Skus saved', i);
       }
     }
+    console.log('loaded all skus');
   }
   processLineByLine();
 });
+
+app.get('/clear', (req, res) => {
+  sku.clear();
+})
 
 
 

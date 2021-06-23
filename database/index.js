@@ -5,5 +5,4 @@
 const uri =  "mongodb://localhost/atelier";
 const mongoose = require('mongoose');
 mongoose.connect(uri);
-
 module.exports = mongoose;

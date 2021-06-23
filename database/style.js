@@ -1,6 +1,6 @@
 const mongoose = require('./index.js');
 const styleSchema = mongoose.Schema({
-  product_id: String,
+  product_id: {type: Number, index: true },
   style_id: Number,
   'default?': Boolean,
   name: String,

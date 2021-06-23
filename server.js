@@ -54,11 +54,66 @@ app.get('/products/:product_id', (req, res) => {
 app.get('/products/:product_id/styles', (req, res) => {
   var pid = req.params.product_id;
   style.find(pid)
-  .then((styles) => {
-    console.log(styles);
-    res.sendStatus(200);
+  .then((response) => {
+    var styles = JSON.parse(JSON.stringify(response));
+    photoPromises = [];
+    skuPromises = [];
+    for (var i = 0; i < styles.length; i++) {
+      if (styles[i].sale_price === 'null') {
+        styles[i].sale_price = null;
+      }
+      var sid = styles[i].style_id;
+      photoPromises.push(photo.find(sid));
+      skuPromises.push(sku.find(sid));
+    }
+    Promise.all(photoPromises)
+    .then((photos) => {
+      for (var i = 0; i < styles.length; i++) {
+        styles[i].photos = photos[i];
+      }
+    })
+    .then(() => {
+      Promise.all(skuPromises)
+      .then((skus) => {
+        // console.log(skus);
+        for (var i = 0; i < styles.length; i++) {
+          var skusObject = {};
+          var skuArray = skus[i];
+          for (var j = 0; j < skuArray.length; j++) {
+            var key = skuArray[j].sku;
+            var innerObject = {quantity: skuArray[j].quantity, size: skuArray[j].size};
+            skusObject[key] = innerObject;
+          }
+          styles[i].skus = skusObject;
+        }
+        var output = {
+          product_id: pid,
+          results: styles
+        };
+        res.json(output);
+      });
+    });
   })
-})
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+});
+
+app.get('/products/:product_id/related', (req, res) => {
+  var pid = req.params.product_id;
+  relationship.find(pid)
+  .then((relations) => {
+    var output = relations.map((relation) => {
+      return relation.related_product_id;
+    });
+    res.json(output);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+});
 
 
 

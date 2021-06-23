@@ -1,7 +1,7 @@
 const mongoose = require('./index.js');
 
 const featureSchema = mongoose.Schema({
-  product_id: String,
+  product_id: {type: Number, index: true },
   feature: String,
   value: String
 });

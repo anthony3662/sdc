@@ -1,8 +1,8 @@
 const mongoose = require('./index.js');
 
 const relationshipSchema = mongoose.Schema({
-  current_product_id: String,
-  related_product_id: String
+  current_product_id: {type: Number, index: true }, //matches productId
+  related_product_id: Number
 });
 
 let Relationship = mongoose.model('Relationship', relationshipSchema);
@@ -16,4 +16,11 @@ let save = (array) => {
   return Relationship.create(array);
 }
 
+let find = (pid) => {
+  return Relationship.find({
+    current_product_id: pid
+  });
+};
+
 module.exports.save = save;
+module.exports.find = find;

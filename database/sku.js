@@ -1,8 +1,8 @@
 const mongoose = require('./index.js');
 
 const skuSchema = mongoose.Schema({
-  sku: String,
-  style_id: String,
+  sku: Number,
+  style_id: {type: Number, index: true },
   quantity: Number,
   size: String
 });
@@ -17,6 +17,13 @@ let save = (array) => {
   // var newRecord = new Sku(sample);
   // return newRecord.save();
   return Sku.create(array);
-}
+};
+let find = (sid) => {
+  return Sku.find({
+    style_id: sid
+  });
+};
+
 
 module.exports.save = save;
+module.exports.find = find;

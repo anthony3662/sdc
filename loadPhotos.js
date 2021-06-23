@@ -46,6 +46,7 @@ app.get('/loadPhotos', (req, res) => {
         console.log('Photos saved', i);
       }
     }
+    console.log('loaded all photos');
   }
   processLineByLine();
 });

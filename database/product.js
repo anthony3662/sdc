@@ -1,7 +1,7 @@
 const mongoose = require('./index.js');
 
 const productSchema = mongoose.Schema({
-  id: Number,
+  _id: Number,
   name: String,
   slogan: String,
   description: String,
@@ -30,7 +30,7 @@ let save = (array) => {
 
 let findAll = (min, max) => {
   return  Product.find({
-    id: {
+    _id: {
       $gte: min,
       $lt: max
     }
@@ -40,7 +40,7 @@ let findAll = (min, max) => {
 
 let find = (pid) => {
   return Product.findOne({
-    id: pid
+    _id: pid
   });
 }
 
