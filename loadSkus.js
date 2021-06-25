@@ -11,18 +11,11 @@ const readline = require('readline');
 const fs = require('fs');
 
 const relationship = require('./database/relationship.js');
-// const productSql = require('./sql/product.js');
-const app = express();
-const PORT = process.env.PORT || 3007;
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(express.static(__dirname + "/public"));
 
 
 
-app.get('/loadSkus', (req, res) => {
+
+module.exports = () => {
 
   async function processLineByLine() {
 
@@ -50,14 +43,5 @@ ${line}`;
     console.log('loaded all skus');
   }
   processLineByLine();
-});
+};
 
-app.get('/clear', (req, res) => {
-  sku.clear();
-})
-
-
-
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});

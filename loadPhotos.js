@@ -1,6 +1,5 @@
 const { readFile } = require('fs/promises');
-const express = require("express");
-const bodyParser = require("body-parser");
+
 const product = require('./database/product.js');
 const style = require('./database/style.js');
 const sku = require('./database/sku.js');
@@ -9,20 +8,12 @@ const photo = require('./database/photo.js');
 const csv = require('jquery-csv');
 const readline = require('readline');
 const fs = require('fs');
-
 const relationship = require('./database/relationship.js');
-// const productSql = require('./sql/product.js');
-const app = express();
-const PORT = process.env.PORT || 3002;
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(express.static(__dirname + "/public"));
 
 
 
-app.get('/loadPhotos', (req, res) => {
+
+module.exports = () => {
 
   async function processLineByLine() {
 
@@ -49,10 +40,6 @@ app.get('/loadPhotos', (req, res) => {
     console.log('loaded all photos');
   }
   processLineByLine();
-});
+};
 
 
-
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});

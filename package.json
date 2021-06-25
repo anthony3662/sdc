@@ -1,5 +1,5 @@
 {
-  "name": "connect-four",
+  "name": "SDC",
   "version": "1.0.0",
   "description": "Connect Four Solution - Bare Minimum Requirements",
   "main": "server.js",

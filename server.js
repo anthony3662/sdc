@@ -138,31 +138,78 @@ app.get('/products/:product_id/related', (req, res) => {
   });
 });
 
-app.get('/test', (req, res) => {
-  var results = [0,0]; //success,error
-  var repeater = setInterval(() => {
-    var random = Math.floor(Math.random() * 1000000) + 1;
-    axios.get(`http://127.0.0.1:3000/products/${random}/styles`)
-    .then((response) => {
-      // console.log(response.data)
-      results[0] += 1;
+app.get('/randomStyle', (req, res) => {
+  var startTime = Date.now();
+  var pid = Math.floor(Math.random() * 1000000) + 1;
+  style.find(pid)
+  .then((response) => {
+    var styles = JSON.parse(JSON.stringify(response));
+    photoPromises = [];
+    skuPromises = [];
+    for (var i = 0; i < styles.length; i++) {
+      if (styles[i].sale_price === 'null') {
+        styles[i].sale_price = null;
+      }
+      var sid = styles[i].style_id;
+      photoPromises.push(photo.find(sid));
+      skuPromises.push(sku.find(sid));
+    }
+    Promise.all(photoPromises)
+    .then((photos) => {
+      for (var i = 0; i < styles.length; i++) {
+        styles[i].photos = photos[i];
+      }
     })
-    .catch((err) => {
-      // console.log(err);
-      results[1] += 1;
+    .then(() => {
+      Promise.all(skuPromises)
+      //first point of failure under high stress - seems the then block is running before the
+      //promise results array fully populates
+      .then((skus) => {
+        // console.log(skus);
+        for (var i = 0; i < styles.length; i++) {
+          var skusObject = {};
+          var skuArray = skus[i];
+          if (!skuArray) {
+            console.log(pid);
+            console.log(skus);
+          }
+          for (var j = 0; j < skuArray.length; j++) {
+            var key = skuArray[j].sku;
+            var innerObject = {quantity: skuArray[j].quantity, size: skuArray[j].size};
+            skusObject[key] = innerObject;
+          }
+          styles[i].skus = skusObject;
+        }
+        var output = {
+          product_id: pid,
+          results: styles
+        };
+        var endTime = Date.now();
+        // console.log(pid + ' styles time:', endTime - startTime);
+        res.json(output);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(500);
+      });
     });
-  }, 5);
-  setTimeout(() => {
-    clearInterval(repeater);
-    setTimeout(() => {
-      res.json(results);
-    }, 50);
-
-  }, 2500);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
 });
 
-
+const init = () => {
+  require('./loadFeatures.js')();
+  require('./loadPhotos.js')();
+  require('./loadProducts.js')();
+  require('./loadRelated.js')();
+  require('./loadSkus.js')();
+  require('./loadStyles.js')();
+};
 
 app.listen(PORT, () => {
+  init();
   console.log(`listening on port ${PORT}`);
 });

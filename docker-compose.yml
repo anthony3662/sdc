@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  sdc:
+    image: node:lts-alpine
+    command: sh -c "npm install && npm run start"
+    ports:
+      - 80:3000
+    working_dir: /sdc
+    volumes:
+      - ./:/sdc
+  mongo:
+    image: mongo:4.4.5
+    volumes:
+      - mongoData:/data/db
+volumes:
+  mongoData:
