@@ -10,7 +10,10 @@ services:
     volumes:
       - ./:/sdc
   mongo:
-    image: mongo:4.4.5
+    build:
+      context: .
+      dockerfile: ./database
+    working_dir: /DATAIMPORT
     volumes:
       - mongoData:/data/db
 volumes:
