@@ -1,5 +1,4 @@
 FROM mongo:4.4.5
-RUN mkdir -p /app/data
-WORKDIR /app/data
-COPY /DATAIMPORT/* /app/data/
-CMD ["mongod", "&&", "mongoimport", "-d", "atelier", "-c", "features", "--headerline", '--drop', "productsTest.csv"]
+WORKDIR /
+COPY /mongoContainer/. /
+# CMD mongorestore --host "mongo" --port 27017 /dump/

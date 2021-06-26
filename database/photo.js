@@ -6,7 +6,7 @@ const photoSchema = mongoose.Schema({
   thumbnail_url: String
 });
 
-let Photo = mongoose.model('Photo', photoSchema);
+let Photo = mongoose.model('Photo', photoSchema, 'photos');
 let save = (array) => {
   // var sample = {
   //   style_id: '51003',

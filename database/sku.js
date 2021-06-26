@@ -7,7 +7,7 @@ const skuSchema = mongoose.Schema({
   size: String
 });
 
-let Sku = mongoose.model('Sku', skuSchema);
+let Sku = mongoose.model('Sku', skuSchema, 'skus');
 let save = (array) => {
   // var sample = {
   //   sku: '295001',

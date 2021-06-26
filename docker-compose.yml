@@ -12,8 +12,10 @@ services:
   mongo:
     build:
       context: .
-      dockerfile: ./database
-    working_dir: /DATAIMPORT
+      dockerfile: ./database/dockerfile
+    ports:
+      - 27017:27017
+
     volumes:
       - mongoData:/data/db
 volumes:

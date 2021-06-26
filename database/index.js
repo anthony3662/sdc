@@ -5,8 +5,11 @@
 //atlas test db
 // const uri = `mongodb+srv://Heroku:${PASSWORD}@fullstack-review.maljn.mongodb.net/sdc?retryWrites=true&w=majority`;
 
-//local db
+//docker db
 const uri =  "mongodb://mongo:27017/atelier";
+
+// const uri =  "mongodb://localhost:27017/atelier";
+
 
 //local test db
 // const uri =  "mongodb://localhost/testAtelier";

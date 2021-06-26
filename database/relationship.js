@@ -5,7 +5,7 @@ const relationshipSchema = mongoose.Schema({
   related_product_id: Number
 });
 
-let Relationship = mongoose.model('Relationship', relationshipSchema);
+let Relationship = mongoose.model('Relationship', relationshipSchema, 'relationships');
 let save = (array) => {
   // var sample = {
   //   product_id: '11004',

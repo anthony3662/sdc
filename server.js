@@ -26,7 +26,7 @@ app.get('/products', (req, res) => {
   product.findAll(minIndex, maxIndex)
     .then((data) => {
       var endTime = Date.now();
-      console.log('/products time:', endTime - startTime);
+      // console.log('/products time:', endTime - startTime);
       res.json(data);
     })
     .catch((err) => {
@@ -48,7 +48,7 @@ app.get('/products/:product_id', (req, res) => {
     var featuresArr = results[1];
     item['features'] = featuresArr;
     var endTime = Date.now();
-    console.log('product detail time:', endTime - startTime);
+    // console.log('product detail time:', endTime - startTime);
     res.json(item);
   })
   .catch((err) => {
@@ -129,7 +129,7 @@ app.get('/products/:product_id/related', (req, res) => {
       return relation.related_product_id;
     });
     var endTime = Date.now();
-    console.log('related time:', endTime - startTime);
+    // console.log('related time:', endTime - startTime);
     res.json(output);
   })
   .catch((err) => {
@@ -201,15 +201,15 @@ app.get('/randomStyle', (req, res) => {
 });
 
 const init = () => {
-  require('./loadFeatures.js')();
-  require('./loadPhotos.js')();
-  require('./loadProducts.js')();
-  require('./loadRelated.js')();
-  require('./loadSkus.js')();
-  require('./loadStyles.js')();
+  // require('./loadFeatures.js')();
+  // require('./loadPhotos.js')();
+  // require('./loadProducts.js')();
+  // require('./loadRelated.js')();
+  // require('./loadSkus.js')();
+  // require('./loadStyles.js')();
 };
 
 app.listen(PORT, () => {
-  init();
+  // init();
   console.log(`listening on port ${PORT}`);
 });

@@ -6,7 +6,7 @@ const featureSchema = mongoose.Schema({
   value: String
 });
 
-let Feature = mongoose.model('Feature', featureSchema);
+let Feature = mongoose.model('Feature', featureSchema, 'features');
 let save = (array) => {
   // var sample = {
   //   product_id: '11003',

@@ -1,3 +1,4 @@
 DATAIMPORT/
 node_modules/
 SDC.pem
+mongoContainer/

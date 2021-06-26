@@ -9,7 +9,7 @@ const styleSchema = mongoose.Schema({
 
 });
 
-let Style = mongoose.model('Style', styleSchema);
+let Style = mongoose.model('Style', styleSchema, 'styles');
 
 let save = (array) => {
   // var sample = {

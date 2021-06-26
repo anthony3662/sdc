@@ -9,7 +9,7 @@ const productSchema = mongoose.Schema({
   default_price: String,
 });
 
-let Product = mongoose.model('Product', productSchema);
+let Product = mongoose.model('Product', productSchema, 'products');
 
 
 let save = (array) => {
