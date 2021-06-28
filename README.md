@@ -34,3 +34,29 @@
 
     Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
     Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
+
+# Docker Containers
+
+- Went through Docker tutorials and set up server and db in seperate containers
+- Initial docker deployment went smoothly and api worked
+- AWS computers are slower than mine and fully seeding the database would have taken 12+ hours
+
+# Making it more scalable
+
+- Wanted to find a more scalable database seeding solution
+- Used mongodump to make a dump directory, scp transferred to EC2
+- Build says out of disk space
+- Made new EC2 instance with 16GB, build failed again.
+- Used docker commit to create image with copied in file system already in place and scp transferred to EC2
+- Build suceeded but EC2 instance crashed during DB seeding
+- Made EC2 instance with 30GB, things worked.
+- Played around with the file system some, the server container uses the EC2 copy of mongoContainer
+- Mongo container has own copy of mongoContainer, will look into how to make it use the EC2 copy
+- Still doesn't explain why the 16GB instance didn't work, 2 copies of the 4.5GB dump, everything should still stay under 11 GB
+- mongorestore after docker exec into mongo container to seed the db, 10 mins or so to complete
+- Wanted docker to call mongorestore for me, but docker doesn't want to do that. Whatever I try, it's connection to p 27017 refused.
+- API works and can start deployment testing. Still want to know why I can type mongorestore myself without issue but docker won't do it for me.
+
+# Loaderio
+
+![First Test 15 seconds 100/s](https://i.ibb.co/NTz5wY1/Screen-Shot-2021-06-28-at-11-23-10-AM.png)

@@ -1,4 +1,4 @@
 FROM mongo:4.4.5
 WORKDIR /
 COPY /mongoContainer/. /
-# CMD mongorestore --host "mongo" --port 27017 /dump/
+# CMD mongorestore --host "mongo" --port 27017 /dump/ 

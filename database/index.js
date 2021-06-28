@@ -6,7 +6,7 @@
 // const uri = `mongodb+srv://Heroku:${PASSWORD}@fullstack-review.maljn.mongodb.net/sdc?retryWrites=true&w=majority`;
 
 //docker db
-const uri =  "mongodb://mongo:27017/atelier";
+const uri =  "mongodb://18.222.176.36:27017/atelier";
 
 // const uri =  "mongodb://localhost:27017/atelier";
 

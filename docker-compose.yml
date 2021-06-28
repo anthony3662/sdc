@@ -9,14 +9,14 @@ services:
     working_dir: /sdc
     volumes:
       - ./:/sdc
-  mongo:
-    build:
-      context: .
-      dockerfile: ./database/dockerfile
-    ports:
-      - 27017:27017
+#   mongo:
+#     build:
+#       context: .
+#       dockerfile: ./database/dockerfile
+#     ports:
+#       - 27017:27017
 
-    volumes:
-      - mongoData:/data/db
-volumes:
-  mongoData:
+#     volumes:
+#       - mongoData:/data/db
+# volumes:
+#   mongoData:
