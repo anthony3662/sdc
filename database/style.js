@@ -38,3 +38,4 @@ let find = (pid) => {
 
 module.exports.save = save;
 module.exports.find = find;
+module.exports.model = Style;
